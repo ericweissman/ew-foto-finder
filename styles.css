@@ -76,4 +76,61 @@ label {
   width: 180px;
 }
 
+.btns:hover {
+  background-color: #938284;
+}
+
 /* IMAGE CARD AREA */
+
+.image-card-area {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px 75px;
+    justify-content: center;
+}
+
+
+/* CARD template */
+
+.image-card {
+    border: 2px solid #5B4447;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: 250px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 25px;
+}
+
+h2 {
+  color: #3E2A35;
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+
+.card-img {
+  height: 175px;
+  width: 250px;
+}
+
+p {
+  color: #3E2A35;
+  font-size: 16px;
+  padding: 10px;
+  height: 75px;
+}
+
+footer {
+  background-color: #5B4447;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-icons {
+  height: 25px;
+  margin: 0 10px;
+}
