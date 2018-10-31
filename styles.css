@@ -83,12 +83,12 @@ label {
 /* IMAGE CARD AREA */
 
 .image-card-area {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 50px 75px;
-  justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px 75px;
+    justify-content: center;
 }
-}
+
 
 /* CARD template */
 
