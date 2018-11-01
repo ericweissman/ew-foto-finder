@@ -28,7 +28,7 @@ header {
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 45px;
   color: white;
   font-weight: 800;
   margin: 25px 0;
@@ -46,7 +46,7 @@ section img {
   border: 1px solid #C2B2B4;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  padding: 10px;
+  padding: 10px 50px 10px 10px;
 }
 
 .search-area {
@@ -70,11 +70,12 @@ section img {
 
 
 
-/* INPUTS */
-
-.input-area-new {
+/* FORM */
+.form-area {
   background-color: #3E2A35;
 }
+/* INPUTS */
+
 .input-area {
   align-items: center;
   display: flex;
@@ -147,33 +148,34 @@ label {
     background-color: white;
     display: flex;
     flex-direction: column;
-    height: 400px;
+    height: 375px;
     width: 250px;
     margin-left: 15px;
     margin-right: 15px;
     margin-bottom: 25px;
 }
 
-h2 {
+.card-title {
   color: #3E2A35;
-  font-size: 18px;
-  padding-left: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px;
 }
 
-
 .card-img {
-  height: 175px;
-  width: 250px;
+  background-color: #938284;
+  height: 165px;
+  width: 246px;
 }
 
 p {
   color: #3E2A35;
   font-size: 16px;
-  padding: 15px;
-  height: 75px;
+  font-weight: 600;
+  padding: 10px;
+  height: 100px;
   overflow: hidden;
 }
-
 
 
 footer {
@@ -187,4 +189,27 @@ footer {
 .card-icons {
   height: 25px;
   margin: 0 10px;
+}
+
+@media screen and (max-width: 749px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-bar {
+    padding-right: 120px;
+  }
+
+  .user-input {
+    width: 365px;
+  }
+  
+  .large {
+    width: 365px;
+  }
+
+  .small-btns {
+
+  }
 }
