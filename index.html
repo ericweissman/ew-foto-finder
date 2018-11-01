@@ -6,6 +6,8 @@
   <link rel="stylesheet" type="text/css" media="screen" href="normalize.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+    crossorigin="anonymous">
 </head>
 <body>
   <header>
@@ -14,6 +16,12 @@
         <img src="images/foto-finder-logo.svg" alt="Foto Finder Logo">
         <h1>Finder</h1>
     </section>
+    <section class="search-area">
+      <input type="text" class="search-bar" placeholder="Search">
+      <button class="search-btn"><i class="fas fa-search"></i></button>
+    </section>
+  </header>
+  <section class="input-area-new">
     <section class="input-area">
       <article class="inputs">
         <label class="user-input-label" for="title-input">Title</label>
@@ -25,10 +33,15 @@
       </article>
     </section>
     <section class="main-btns">
-      <button class="btns choose">Choose File</button>
-      <button class="btns add">Add to Album</button>
+      <button class="btns large choose">Choose File</button>
+      <div class="small-btns">
+        <button class="btns favorites">View Favorites</button>
+        <button class="btns add">Add to Album</button>
+      </div>
+
     </section>
-  </header>
+  </section>
+
   <!-- CARDS WILL GO IN IMAGE-CARD-AREA!! -->
 
   <main class="image-card-area">
