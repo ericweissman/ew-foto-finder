@@ -34,7 +34,7 @@ h1 {
   text-transform: uppercase;
 }
 
-section img {
+.logo {
   height: 35px;
   padding: 0 10px;
 }
@@ -200,7 +200,7 @@ p {
   height: 52px;
   align-items: center;
   justify-content: space-between;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .card-btns {
