@@ -13,6 +13,7 @@ body {
 /* HEADER SECTION */
 header {
   background-color: #3E2A35;
+  border: 1px solid #3E2A35;
   display: flex;
   justify-content: space-between;
 }
@@ -268,8 +269,16 @@ p {
 }
 
 @media screen and (max-width: 449px) {
+  .title {
+    padding: 0 5px;
+  }
+  
   h1 {
     font-size: 35px;
+  }
+
+  .search-area {
+  padding: 0 10px;
   }
 
   .search-bar {
@@ -287,7 +296,7 @@ p {
   .favorites,
   .add {
     font-size: 12px;
-    margin: 0px 30px;
+    margin: 0px 20px;
     width: 118px;
   }
 }
