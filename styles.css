@@ -50,6 +50,7 @@ section img {
   border: 1px solid #C2B2B4;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
+  height: 40px;
   padding: 10px 50px 10px 10px;
 }
 
@@ -158,7 +159,6 @@ label {
   display: flex;
   flex-wrap: wrap;
   padding-top: 30px;
-  justify-content: center;
 }
 
 /* CARD template! */
@@ -180,7 +180,7 @@ label {
 }
 
 .card-img {
-  background-color: #938284;
+  object-fit: cover;
   height: 175px;
   width: 271px;
 }
@@ -200,7 +200,7 @@ p {
   height: 52px;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 4px;
 }
 
 .card-btns {
