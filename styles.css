@@ -156,9 +156,9 @@ label {
 
 /* IMAGE CARD AREA */
 .image-card-area {
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 30px;
 }
 
 /* CARD template! */

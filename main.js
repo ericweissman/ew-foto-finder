@@ -1,7 +1,9 @@
 // EVENT LISTENERS
 document.querySelector('.add').addEventListener('click', createNewPhotoCard);
+document.querySelector('.image-card-area').addEventListener('click', findCardToDelete);
+document.querySelector('.image-card-area').addEventListener('focusout', editPhotoInfo);
+document.querySelector('.image-card-area').addEventListener('click', editFavoriteStatus)
 
-document.querySelector('.image-card-area').addEventListener('click', findCardId);
 
 // PHOTO ALBUM ARRAY
 var photoAlbum = [];
@@ -17,9 +19,9 @@ function deleteCardUsing(cardId) {
   // at the specific index in the Array, run the delete from storage method
   photoAlbum[index].deleteFromStorage(photoAlbum, index);
   event.target.closest('article').remove();
-}
+};
 
-function findCardId(event){
+function findCardToDelete(event){
   // if i click on a delete btn
   if(event.target.classList.contains('delete')){
     // grab the photo cards ID (which lives in dataset)
@@ -31,7 +33,7 @@ function findCardId(event){
 
 
 
-
+// CREATE CARDS FUNCTIONALITY
 function createNewPhotoCard(event) {
   event.preventDefault();
   // Grab title text
@@ -47,7 +49,7 @@ function createNewPhotoCard(event) {
     // create new photo card wiht titel, caption and URL for the img src
     var photo = new Photo(titleText, captionText, pictureURL);
     // add new photo card to DOM
-    addCardWith(photo);
+    addCardToDomWith(photo);
     // add photo card to the album array
     addToAlbumArray(photo);
     // save the array back to local storage
@@ -61,7 +63,7 @@ function addToAlbumArray(photoCard){
 }
 
 // ADD CARD TO DOM
-function addCardWith(photo) {
+function addCardToDomWith(photo) {
   var newPhotoCard = document.createElement('article');
  
   newPhotoCard.className = 'image-card';
@@ -88,7 +90,98 @@ function pullCardsFromStorage() {
     });
     // for each card in the Array, add it to the DOM
       photoAlbum.forEach(function(photoCard){
-      addCardWith(photoCard);
+      addCardToDomWith(photoCard);
     });
   }
 }
+
+
+// EDITING PHOTO INFO
+function editPhotoInfo(event) {
+  if(event.target.classList.contains('card-title')){
+    var currentCard = event.target.closest('.image-card');
+    var currentCardTitle = event.target.closest('.image-card .card-title').innerText;
+   
+    photoAlbum.forEach(function(oldCard){
+      if (oldCard.id == currentCard.dataset.name) {
+        // oldCard.title = currentCardTitle;
+        oldCard.updateTitle(currentCardTitle);
+        oldCard.saveToStorage(photoAlbum);
+      }
+    })
+  }
+
+  if(event.target.classList.contains('card-caption')){
+    var currentCard = event.target.closest('.image-card');
+    var currentCardCaption = event.target.closest('.image-card .card-caption').innerText;
+
+    photoAlbum.forEach(function(oldCard){
+      if(oldCard.id == currentCard.dataset.name) {
+        // oldCard.caption = currentCardCaption;
+        oldCard.updateCaption(currentCardCaption);
+        oldCard.saveToStorage(photoAlbum);
+      }
+    })
+  }
+}
+
+// TOGGLE WHETHER PHOTO IS CLASSIFIED AS A FAVORITE
+function editFavoriteStatus(event){
+  if (event.target.classList.contains('favorite')) {
+    var currentCard = event.target.closest('.image-card');
+
+    photoAlbum.forEach(function(oldCard){
+      if(oldCard.id == currentCard.dataset.name){
+        oldCard.updateFavorite();
+        oldCard.saveToStorage(photoAlbum);
+      }
+    })
+  }
+}
+
+
+
+
+
+
+// FAVORITE FUNCTIONALITY
+// WHEN I CLICK ON THE FAVORITE ICON -- findCardToFavorite()
+
+// THE CARD WILL UPDATE THIS.FAVORITE
+// if it is false, switch to true
+// if it is true, switch to false (bang operator?)
+
+// THE ICON WILL REMAIN RED (EVEN ON RELOAD)
+// if favorite is true, apply the active class
+// if favorite is false, remove the active class
+
+// FAVORITE-TRUE WILL BE UPDATED IN THE PHOTO ARRAY
+// find the correct item in array and update the favorite status
+
+// THE VIEW ## OF FAVORITES WILL UPDATE
+// check each card in the Array
+// count the number of cards where favorite = true
+// return the number of cards where favorite = true
+// update the innerText of the add to favorites btn 
+
+// document.querySelector('.image-card-area').addEventListener('click', findCardToFavorite);
+
+// function findCardToFavorite(event) {
+//   // if i click on a favorite btn
+//   if (event.target.classList.contains('favorite')) {
+//     // grab the photo cards ID (which lives in dataset)
+//     var cardId = event.target.closest('article').dataset.name;
+// //     // INSERT FUNCTION TO CHANGE THE SPECIFIC CARDS FAVORITE STATUS
+
+//   }
+// };
+
+
+
+// function changeFavoriteStatus() {
+//   var index = photoAlbum.findIndex(function (photo) {
+//     return photo.id = cardId;
+//   }
+//   photoAlbum[index].updateSelf(photoAlbum, index);
+
+// }
