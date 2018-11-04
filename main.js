@@ -5,8 +5,9 @@ document.querySelector('.image-card-area').addEventListener('focusout', editPhot
 document.querySelector('.image-card-area').addEventListener('click', editFavoriteStatus)
 
 
-// PHOTO ALBUM ARRAY
+// GLOBAL JAUNTS
 var photoAlbum = [];
+var favoriteCounter = 0;
 
 window.onload = pullCardsFromStorage;
 
@@ -129,59 +130,28 @@ function editPhotoInfo(event) {
 function editFavoriteStatus(event){
   if (event.target.classList.contains('favorite')) {
     var currentCard = event.target.closest('.image-card');
-
+    var currentCardId = currentCard.dataset.name
+    
     photoAlbum.forEach(function(oldCard){
-      if(oldCard.id == currentCard.dataset.name){
+      if(oldCard.id == currentCardId){
+        currentCard = oldCard;
         oldCard.updateFavorite();
         oldCard.saveToStorage(photoAlbum);
       }
     })
+    event.target.classList.replace(`favorite-${!currentCard.favorite}`, `favorite-${currentCard.favorite}`);
+
+    if (currentCard.favorite) {
+      favoriteCounter++;
+    } else {
+      favoriteCounter--;
+    }
+    updateFavViewNums();
   }
 }
 
 
+function updateFavViewNums(){
+  document.querySelector('.favorites').innerText = `View ${favoriteCounter} Favorites`;
+}
 
-
-
-
-// FAVORITE FUNCTIONALITY
-// WHEN I CLICK ON THE FAVORITE ICON -- findCardToFavorite()
-
-// THE CARD WILL UPDATE THIS.FAVORITE
-// if it is false, switch to true
-// if it is true, switch to false (bang operator?)
-
-// THE ICON WILL REMAIN RED (EVEN ON RELOAD)
-// if favorite is true, apply the active class
-// if favorite is false, remove the active class
-
-// FAVORITE-TRUE WILL BE UPDATED IN THE PHOTO ARRAY
-// find the correct item in array and update the favorite status
-
-// THE VIEW ## OF FAVORITES WILL UPDATE
-// check each card in the Array
-// count the number of cards where favorite = true
-// return the number of cards where favorite = true
-// update the innerText of the add to favorites btn 
-
-// document.querySelector('.image-card-area').addEventListener('click', findCardToFavorite);
-
-// function findCardToFavorite(event) {
-//   // if i click on a favorite btn
-//   if (event.target.classList.contains('favorite')) {
-//     // grab the photo cards ID (which lives in dataset)
-//     var cardId = event.target.closest('article').dataset.name;
-// //     // INSERT FUNCTION TO CHANGE THE SPECIFIC CARDS FAVORITE STATUS
-
-//   }
-// };
-
-
-
-// function changeFavoriteStatus() {
-//   var index = photoAlbum.findIndex(function (photo) {
-//     return photo.id = cardId;
-//   }
-//   photoAlbum[index].updateSelf(photoAlbum, index);
-
-// }

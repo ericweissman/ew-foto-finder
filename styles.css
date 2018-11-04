@@ -227,17 +227,17 @@ p {
   background-repeat: no-repeat;
 }
 
-.favorite {
+.favorite-false {
   background-image:url(images/favorite.svg);
   background-repeat: no-repeat;
 }
 
-.favorite:hover {
+.favorite-false:hover {
   background-image: url(images/favorite-active.svg);
   background-repeat: no-repeat;
 }
 
-.favorite-active {
+.favorite-true {
   background-image: url(images/favorite-active.svg);
   background-repeat: no-repeat;
 }

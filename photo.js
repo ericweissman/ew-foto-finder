@@ -15,7 +15,7 @@ class Photo {
       <p class="card-caption" contenteditable="true">${this.caption}</p>
       <section class="card-bottom">
         <button class="card-btns delete"></button>
-        <button class="card-btns favorite"></button>
+        <button class="card-btns favorite favorite-${this.favorite} "></button>
       </section>`;
   }
 
