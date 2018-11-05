@@ -1,7 +1,8 @@
 // EVENT LISTENERS
 document.querySelector('.add').addEventListener('click', createNewPhotoCard);
 document.querySelector('.image-card-area').addEventListener('click', findCardToDelete);
-document.querySelector('.image-card-area').addEventListener('focusout', editPhotoInfo);
+document.querySelector('.image-card-area').addEventListener('focusout', editPhotoTitle);
+document.querySelector('.image-card-area').addEventListener('focusout', editPhotoCaption);
 document.querySelector('.image-card-area').addEventListener('click', editFavoriteStatus)
 
 
@@ -10,29 +11,6 @@ var photoAlbum = [];
 var favoriteCounter = 0;
 
 window.onload = pullCardsFromStorage;
-
-// DELETE FUNCTIONALITY
-function deleteCardUsing(cardId) {
-  // find the index in the photo album array that matches the specific ID
-  var index = photoAlbum.findIndex(function (photo) {
-    return photo.id = cardId;
-  });
-  // at the specific index in the Array, run the delete from storage method
-  photoAlbum[index].deleteFromStorage(photoAlbum, index);
-  event.target.closest('article').remove();
-};
-
-function findCardToDelete(event){
-  // if i click on a delete btn
-  if(event.target.classList.contains('delete')){
-    // grab the photo cards ID (which lives in dataset)
-    var cardId = event.target.closest('article').dataset.name; 
-    // delete the correct card by referencing its ID
-    deleteCardUsing(cardId)
-  }
-};
-
-
 
 // CREATE CARDS FUNCTIONALITY
 function createNewPhotoCard(event) {
@@ -47,7 +25,7 @@ function createNewPhotoCard(event) {
   var pictureURL = URL.createObjectURL(file);
   
   if (event.target.classList.contains('add') && titleText && captionText) {
-    // create new photo card wiht titel, caption and URL for the img src
+    // create new photo card with title, caption and URL for the img src
     var photo = new Photo(titleText, captionText, pictureURL);
     // add new photo card to DOM
     addCardToDomWith(photo);
@@ -87,38 +65,64 @@ function pullCardsFromStorage() {
     photoAlbum = JSON.parse(localStorage.getItem("Photos"));
     // for everything in the Array, go an re-instantiate each card
     photoAlbum = photoAlbum.map(function(photoCard){
-      return photoCard = new Photo(photoCard.title, photoCard.caption, photoCard.file, photoCard.id);
+      return photoCard = new Photo(photoCard.title, photoCard.caption, photoCard.file, photoCard.id, photoCard.favorite);
     });
     // for each card in the Array, add it to the DOM
       photoAlbum.forEach(function(photoCard){
       addCardToDomWith(photoCard);
+      // if the card is marked as a favorite, update the favorite counter
+      if (photoCard.favorite){
+        favoriteCounter++;
+      }
+      updateFavViewNums();
     });
   }
 }
 
+// DELETE FUNCTIONALITY
+function deleteCardUsing(cardId) {
+  // find the index in the photo album array that matches the specific ID
+  var index = photoAlbum.findIndex(function (photo) {
+    return photo.id = cardId;
+  });
+  // at the specific index in the Array, run the delete from storage method
+  photoAlbum[index].deleteFromStorage(photoAlbum, index);
+  event.target.closest('article').remove();
+};
+
+function findCardToDelete(event) {
+  // if i click on a delete btn
+  if (event.target.classList.contains('delete')) {
+    // grab the photo cards ID (which lives in dataset)
+    var cardId = event.target.closest('article').dataset.name;
+    // delete the correct card by referencing its ID
+    deleteCardUsing(cardId)
+  }
+};
+
 
 // EDITING PHOTO INFO
-function editPhotoInfo(event) {
+function editPhotoTitle(event) {
   if(event.target.classList.contains('card-title')){
     var currentCard = event.target.closest('.image-card');
     var currentCardTitle = event.target.closest('.image-card .card-title').innerText;
    
     photoAlbum.forEach(function(oldCard){
       if (oldCard.id == currentCard.dataset.name) {
-        // oldCard.title = currentCardTitle;
         oldCard.updateTitle(currentCardTitle);
         oldCard.saveToStorage(photoAlbum);
       }
     })
   }
+}
 
+function editPhotoCaption(event){
   if(event.target.classList.contains('card-caption')){
     var currentCard = event.target.closest('.image-card');
     var currentCardCaption = event.target.closest('.image-card .card-caption').innerText;
 
     photoAlbum.forEach(function(oldCard){
       if(oldCard.id == currentCard.dataset.name) {
-        // oldCard.caption = currentCardCaption;
         oldCard.updateCaption(currentCardCaption);
         oldCard.saveToStorage(photoAlbum);
       }
@@ -126,30 +130,34 @@ function editPhotoInfo(event) {
   }
 }
 
+
 // TOGGLE WHETHER PHOTO IS CLASSIFIED AS A FAVORITE
 function editFavoriteStatus(event){
+  // if you click on a facorite button
   if (event.target.classList.contains('favorite')) {
     var currentCard = event.target.closest('.image-card');
     var currentCardId = currentCard.dataset.name
-    
-    photoAlbum.forEach(function(oldCard){
-      if(oldCard.id == currentCardId){
-        currentCard = oldCard;
-        oldCard.updateFavorite();
-        oldCard.saveToStorage(photoAlbum);
-      }
-    })
-    event.target.classList.replace(`favorite-${!currentCard.favorite}`, `favorite-${currentCard.favorite}`);
+    // assigning index to the specific index in the array that matcehs the id
+    var index = photoAlbum.findIndex(function(cardFromArray){
+      return cardFromArray.id == currentCardId
+      })
 
+    currentCard = photoAlbum[index];
+    currentCard.updatePhoto();
+    currentCard.saveToStorage(photoAlbum);
+    
+    // If the classlist is NOT favorite, replace with favorite to add correct styles
+    event.target.classList.replace(`favorite-${!currentCard.favorite}`, `favorite-${currentCard.favorite}`);
+    // if the card is marked favorite, increase the favorite counter
     if (currentCard.favorite) {
       favoriteCounter++;
+      // otherwise, decrease the favorite counter
     } else {
       favoriteCounter--;
     }
     updateFavViewNums();
   }
 }
-
 
 function updateFavViewNums(){
   document.querySelector('.favorites').innerText = `View ${favoriteCounter} Favorites`;

@@ -1,10 +1,10 @@
 class Photo {
-  constructor(title, caption, file, id){
+  constructor(title, caption, file, id, favorite){
     this.title = title;
     this.caption = caption;
     this.file = file;
     this.id = id || Date.now();
-    this.favorite = false;
+    this.favorite = favorite || false;
   }
 
   photoCardInfo(photoCard) {
@@ -39,12 +39,8 @@ class Photo {
     this.caption = newCaption;
   }
 
-  updateFavorite(){
-    this.favorite = !this.favorite;
-  }
-
   updatePhoto() {
-
+    this.favorite = !this.favorite;
   }
 
 }
