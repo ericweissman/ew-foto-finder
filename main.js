@@ -5,7 +5,10 @@ document.querySelector('.image-card-area').addEventListener('focusout', editPhot
 document.querySelector('.image-card-area').addEventListener('focusout', editPhotoCaption);
 document.querySelector('.image-card-area').addEventListener('click', editFavoriteStatus);
 document.querySelector('.search-bar').addEventListener('keyup', searchForCards);
-// document.querySelector('.favorites').addEventListener('click', showFavoritesOnly);
+document.querySelector('#title-input').addEventListener('focusout', toggleDisabled);
+document.querySelector('#caption-input').addEventListener('focusout', toggleDisabled);
+document.querySelector('#file').addEventListener('change', toggleDisabled);
+
 
 
 // GLOBAL JAUNTS
@@ -239,5 +242,19 @@ function showFavoritesOnly(event) {
 function testShowAll(event){
   if (document.querySelector('.favorites').innerText = 'Show All Photos'){
     document.querySelector(".image-card-area").innerHTML = "";
+  }
+}
+
+// DISABLED FUNCTIONALITY
+function toggleDisabled(event) {
+  var title = document.querySelector('#title-input').value;
+  var caption = document.querySelector('#caption-input').value;
+  var file = document.querySelector('#file').value;
+  var addBtn = document.querySelector(".add");
+
+  if (!title || !caption || !file) {
+    addBtn.disabled = true;
+  } else if (title && caption && file) {
+    addBtn.disabled = false;
   }
 }
