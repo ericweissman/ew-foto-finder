@@ -6,44 +6,48 @@
   <link rel="stylesheet" type="text/css" media="screen" href="normalize.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+    crossorigin="anonymous">
 </head>
 <body>
   <header>
     <section class="title">
         <h1>Foto</h1>
-        <img src="images/foto-finder-logo.svg" alt="Foto Finder Logo">
+        <img class="logo" src="images/foto-finder-logo.svg" alt="Foto Finder Logo">
         <h1>Finder</h1>
     </section>
-    <section class="input-area">
-      <article class="inputs">
-        <label class="user-input-label" for="title-input">Title</label>
-        <input class="user-input" type="text" id="title-input">
-      </article>
-      <article class="inputs">
-        <label class="user-input-label" for="caption-input">Caption</label>
-        <input class="user-input" type="text" id="caption-input">
-      </article>
-    </section>
-    <section class="main-btns">
-      <button class="btns choose">Choose File</button>
-      <button class="btns add">Add to Album</button>
+    <section class="search-area">
+      <input type="text" class="search-bar" placeholder="Search">
+      <button class="search-btn"><i class="fas fa-search"></i></button>
     </section>
   </header>
-  <!-- CARDS WILL GO IN IMAGE-CARD-AREA!! -->
-
-  <main class="image-card-area">
-    <article class="image-card">
-      <h2>Test</h2>
-      <img class="card-img" src="https://cdn.shopify.com/s/files/1/1066/9482/products/ww-tiedye_fd5c50b1-eaa4-4f11-bd0b-44cbc0040da3_grande.jpg?v=1510854137" >
-      <p>Bacon ipsum dolor amet ham pork swine pork belly tenderloin strip steak bresaola sirloin buffalo boudin shankle. </p>
-      <footer>
-        <img class="card-icons" src="images/delete.svg" alt="trash-icon">
-        <img class="card-icons" src="images/favorite.svg" alt="favorite-icon">
-      </footer>
-    </article>
-
-
-  </main>
+  <section class="form-area">
+    <form action="" >
+      <section class="input-area">
+        <article class="inputs">
+          <label class="user-input-label" for="title-input">Title</label>
+          <input class="user-input" type="text" id="title-input">
+        </article>
+        <article class="inputs">
+          <label class="user-input-label" for="caption-input">Caption</label>
+          <input class="user-input" type="text" id="caption-input">
+        </article>
+      </section>
+      <section class="top-btns">
+        <input type="file" name="file" id="file" class="upload" accept="image/*"/>
+        <label class="upload-label" for="file">
+          Choose File
+        </label>
+        <div class="small-btns">
+          <button class="btns favorites">View Favorites</button>
+          <button class="btns add" disabled>Add to Album</button>
+        </div>
+      </section>
+    </form>
+  </section>
+  <!-- CARDS GO HERE + CARD TEMPLATE -->
+  <main class="image-card-area"></main>
+  <section class="instructions"></section>
   <script src="photo.js"></script>
   <script src="main.js"></script>
 </body>
