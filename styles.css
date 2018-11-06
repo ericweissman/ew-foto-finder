@@ -157,8 +157,11 @@ label {
 /* IMAGE CARD AREA */
 .image-card-area {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  padding: 30px;
+
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+  margin: 10px;
+  /* padding: 30px; */
 }
 
 /* CARD template! */
@@ -181,8 +184,10 @@ label {
 
 .card-img {
   object-fit: cover;
+  /* height: 75%; */
+  width: 100%;
   height: 175px;
-  width: 271px;
+  /* width: 271px; */ */
 }
 
 p {
@@ -241,6 +246,17 @@ p {
   background-image: url(images/favorite-active.svg);
   background-repeat: no-repeat;
 }
+/* 
+@media screen and (max-width: 1279px){
+  .image-card-area {
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-left: 35px;
+}
+
+@media screen and (max-width: 974px){
+  .image-card-area {
+    grid-template-columns: 1fr 1fr;
+} */
 
 
 @media screen and (max-width: 749px) {
@@ -267,6 +283,12 @@ p {
     width: 152px;
   }
 }
+
+/* @media screen and (max-width: 660px){
+  .image-card-area {
+    grid-template-columns: 1fr;
+} */
+
 
 @media screen and (max-width: 449px) {
   .title {

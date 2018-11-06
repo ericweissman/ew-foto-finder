@@ -11,7 +11,9 @@ class Photo {
     photoCard.dataset.name = this.id
     photoCard.innerHTML = `
       <h2 class="card-title" contenteditable="true">${this.title}</h2>
+      <div>
       <img class="card-img" src="${this.file}" alt=" photo">
+      </div>
       <p class="card-caption" contenteditable="true">${this.caption}</p>
       <section class="card-bottom">
         <button class="card-btns delete"></button>
@@ -20,12 +22,10 @@ class Photo {
   }
 
   saveToStorage(albumArray) {
-    // SAVING THE ARRAY TO STORAGE WHICH CONTAINS ALL THE PHOTO CARDS
     localStorage.setItem('Photos', JSON.stringify(albumArray));
   }
 
   deleteFromStorage(array, index) {
-    // go into the array and delete one thing at the selected index
     array.splice(index, 1);
     this.saveToStorage(array);
   };
@@ -39,10 +39,9 @@ class Photo {
     this.caption = newCaption;
   }
 
-  updatePhoto() {
+  updateFavorite() {
     this.favorite = !this.favorite;
   }
-
 }
 
 
