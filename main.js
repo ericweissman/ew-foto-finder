@@ -8,17 +8,46 @@ document.querySelector('.search-bar').addEventListener('keyup', searchForCards);
 document.querySelector('#title-input').addEventListener('focusout', toggleDisabled);
 document.querySelector('#caption-input').addEventListener('focusout', toggleDisabled);
 document.querySelector('#file').addEventListener('change', toggleDisabled);
-
-
+document.querySelector('.favorites').addEventListener('click', changeFavoritesBtn);
 
 // GLOBAL JAUNTS
 var photoAlbum = [];
 var favoriteCounter = 0;
 
-
 window.onload = setPage();
 
-// Initial State
+
+// SHOW FAVORITES FUNCTIONALITY
+function changeFavoritesBtn(event) {
+  event.preventDefault();
+  if (event.target.classList.contains('favorites')){
+    document.querySelector('.favorites').classList.replace('favorites', 'view-all');
+    document.querySelector('.view-all').innerText = 'Show All Photos'
+    showFavoritesOnly();
+  } else {
+    document.querySelector('.view-all').classList.replace('view-all', 'favorites');
+    clearDOM();
+    photoAlbum.forEach(function (photoCard) {
+      addCardToDomWith(photoCard);
+    });
+    updateFavViewNums();
+  }
+}
+
+function showFavoritesOnly() {
+  var favorites = photoAlbum.filter(function (photo) {
+      if (photo.favorite === true) {
+      return photo;
+    }
+  });
+  clearDOM();
+  favorites.forEach(function (favorite) {
+    addCardToDomWith(favorite);
+  });
+}
+
+
+// Initial State + Instructions
 function setPage(){
   if (localStorage.getItem('Photos') == null) {
     document.querySelector('.instructions').insertAdjacentHTML('afterbegin', `<h1 id="message">Add Photos To Album Above!</h1>`);
@@ -30,11 +59,11 @@ function setPage(){
 
 function displayMessageWhenEmpty() {
   if (localStorage.getItem('Photos') == null) {
-    document.querySelector('.image-card-area').insertAdjacentHTML('afterbegin', `<h1 id="message">Add Photos To Album Above!</h1>`);
+    document.querySelector('.instructions').insertAdjacentHTML('afterbegin', `<h1 id="message">Add Photos To Album Above!</h1>`);
   }
 }
 
-function removeWarning(){
+function displayInstructions(){
   var message = document.getElementById('message');
   if (message){
     message.parentNode.removeChild(message);
@@ -53,7 +82,7 @@ function searchForCards(event){
     return cardTitle.includes(query) || cardCaption.includes(query);
   })
   // Clear the DOM
-  document.querySelector('.image-card-area').innerHTML = '';
+  clearDOM();
   // Go through the new array of search searchResults, and add to dom if it meets the query specs
   searchResults.forEach(function(meetsQuery){
     addCardToDomWith(meetsQuery);
@@ -63,7 +92,6 @@ function searchForCards(event){
 // CREATE CARDS FUNCTIONALITY
 function createNewPhotoCard(event) {
   event.preventDefault();
-
   var file = document.querySelector("#file").files[0];
   var reader = new FileReader();
   reader.readAsDataURL(file);
@@ -75,7 +103,7 @@ function createNewPhotoCard(event) {
     // grab the URL from the upload input - reader 
     var pictureURL = event.target.result;
     // turn the file into a usable URL string
-    removeWarning();
+    displayInstructions();
     if (titleText && captionText) {
       // create new photo card with title, caption and URL for the img src
       var photo = new Photo(titleText, captionText, pictureURL);
@@ -108,6 +136,10 @@ function addCardToDomWith(photo) {
 function clearInputs() {
   document.querySelector("#title-input").value = null;
   document.querySelector("#caption-input").value = null;
+}
+
+function clearDOM(){
+  document.querySelector('.image-card-area').innerHTML = '';
 }
 
 // ADDING REMOVING FROM LOCAL STORAGE 
@@ -217,34 +249,6 @@ function updateFavViewNums(){
 }
 
 
-
-// SHOW FAVORITES FUNCTIONALITY
-function changeFavoritesBtn() {
-  document.querySelector('.favorites').innerText = `Show All Photos`;
-  document.querySelector('.favorites').classList.replace('favorites', 'view-all');
-}
-
-
-function showFavoritesOnly(event) {
-  event.preventDefault();
-  var favorites = photoAlbum.filter(function (photo) {
-    if (photo.favorite === true) {
-      return photo;
-    }
-  })
-  document.querySelector('.image-card-area').innerHTML = '';
-  favorites.forEach(function (favorite) {
-    addCardToDomWith(favorite);
-  })
-  changeFavoritesBtn();
-}
-
-function testShowAll(event){
-  if (document.querySelector('.favorites').innerText = 'Show All Photos'){
-    document.querySelector(".image-card-area").innerHTML = "";
-  }
-}
-
 // DISABLED FUNCTIONALITY
 function toggleDisabled(event) {
   var title = document.querySelector('#title-input').value;
@@ -258,3 +262,14 @@ function toggleDisabled(event) {
     addBtn.disabled = false;
   }
 }
+
+
+// SHOW MORE SHOW LESS
+// On page load, only show the first ten cards
+
+
+
+// If the user clicks SHOW MORE, all cards from storage are shown
+// SHOW MORE changes to SHOW LESS
+
+// If the user clicks SHOW LESS, only the first ten cards are shown
