@@ -246,6 +246,10 @@ p {
   background-image: url(images/favorite-active.svg);
   background-repeat: no-repeat;
 }
+
+.message {
+  width: 525px;
+}
 /* 
 @media screen and (max-width: 1279px){
   .image-card-area {

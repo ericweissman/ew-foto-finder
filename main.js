@@ -13,7 +13,30 @@ var photoAlbum = [];
 var favoriteCounter = 0;
 
 
-window.onload = pullCardsFromStorage;
+window.onload = setPage();
+
+// Initial State
+function setPage(){
+  if (localStorage.getItem('Photos') == null) {
+    document.querySelector('.image-card-area').insertAdjacentHTML('afterbegin', `<h1 id="message">Add Photos To Album Above!</h1>`);
+  }
+  else {
+    pullCardsFromStorage();
+  }
+}
+
+function displayMessageWhenEmpty() {
+  if (localStorage.getItem('Photos') == null) {
+    document.querySelector('.image-card-area').insertAdjacentHTML('afterbegin', `<h1 id="message">Add Photos To Album Above!</h1>`);
+  }
+}
+
+function removeWarning(){
+  var message = document.getElementById('message');
+  if (message){
+    message.parentNode.removeChild(message);
+  }
+}
 
 
 // SEARCH FUNCTIONALITY
@@ -49,6 +72,7 @@ function createNewPhotoCard(event) {
     // grab the URL from the upload input - reader 
     var pictureURL = event.target.result;
     // turn the file into a usable URL string
+    removeWarning();
     if (titleText && captionText) {
       // create new photo card with title, caption and URL for the img src
       var photo = new Photo(titleText, captionText, pictureURL);
@@ -58,6 +82,7 @@ function createNewPhotoCard(event) {
       addToAlbumArray(photo);
       // save the array back to local storage
       photo.saveToStorage(photoAlbum);
+      // Remove the warning message?
     }
   }
 }
@@ -113,6 +138,7 @@ function deleteCardUsing(cardId) {
   // at the specific index in the Array, run the delete from storage method
   photoAlbum[index].deleteFromStorage(photoAlbum, index);
   event.target.closest('article').remove();
+  displayMessageWhenEmpty();
 };
 
 function findCardToDelete(event) {
@@ -134,21 +160,21 @@ function editPhotoTitle(event) {
    
     photoAlbum.forEach(function(oldCard){
       if (oldCard.id == currentCard.dataset.name) {
-        oldCard.updateTitle(currentCardTitle);
+        oldCard.updatePhoto(currentCardTitle, oldCard.caption, oldCard.favorite);
         oldCard.saveToStorage(photoAlbum);
       }
     })
   }
 }
 
-function editPhotoCaption(event){
-  if(event.target.classList.contains('card-caption')){
+function editPhotoCaption(event) {
+  if (event.target.classList.contains('card-caption')) {
     var currentCard = event.target.closest('.image-card');
     var currentCardCaption = event.target.closest('.image-card .card-caption').innerText;
 
-    photoAlbum.forEach(function(oldCard){
-      if(oldCard.id == currentCard.dataset.name) {
-        oldCard.updateCaption(currentCardCaption);
+    photoAlbum.forEach(function (oldCard) {
+      if (oldCard.id == currentCard.dataset.name) {
+        oldCard.updatePhoto(oldCard.title, currentCardCaption, oldCard.favorite);
         oldCard.saveToStorage(photoAlbum);
       }
     })
@@ -167,7 +193,7 @@ function editFavoriteStatus(event){
       })
 
     currentCard = photoAlbum[index];
-    currentCard.updateFavorite();
+    currentCard.updatePhoto(currentCard.title, currentCard.caption, !currentCard.favorite);
     currentCard.saveToStorage(photoAlbum);
     
     // If the classlist is NOT favorite, replace with favorite to add correct styles
@@ -187,15 +213,6 @@ function updateFavViewNums(){
   document.querySelector('.favorites').innerText = `View ${favoriteCounter} Favorites`;
 }
 
-
-
-
-// FAVORITES BUTTON
-// IF FAVORITES BUTTON CONTAINS 'VIEW FAVORITES'
-// WHEN I CLICK, RUN SHOWONLYFAVORITESFUNCTION
-
-// IF FAVORITESBUTTON.INNERTEXT = SHOW ALL
-// ON CLICK, SHOW ALL CARDS ON DOM
 
 
 // SHOW FAVORITES FUNCTIONALITY

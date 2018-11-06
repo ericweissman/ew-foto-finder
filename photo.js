@@ -28,19 +28,19 @@ class Photo {
   deleteFromStorage(array, index) {
     array.splice(index, 1);
     this.saveToStorage(array);
+
+    if(array.length !== 0){
+      this.saveToStorage(array);
+    } else {
+      localStorage.clear();
+    }
   };
 
 
-  updateTitle(newTitle){
+  updatePhoto(newTitle, newCaption, favorite){
     this.title = newTitle;
-  }
-
-  updateCaption(newCaption){
     this.caption = newCaption;
-  }
-
-  updateFavorite() {
-    this.favorite = !this.favorite;
+    this.favorite = favorite;
   }
 }
 
