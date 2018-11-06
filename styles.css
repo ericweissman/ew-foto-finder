@@ -161,7 +161,7 @@ label {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   margin: 10px;
-  /* padding: 30px; */
+  padding: 30px;
 }
 
 /* CARD template! */
@@ -247,31 +247,50 @@ p {
   background-repeat: no-repeat;
 }
 
-#message {
-  width: 525px;
+/* INSTRUCTIONS SECTION */
+.instructions {
+  display: flex;
+  justify-content: center;
 }
 
+#message {
+  font-size: 24px;
+  margin: 0;
+}
 
 /* DISABLE BUTTONS */
 .btns:disabled {
   background-color: #C2B2B4;
 }
 
-
-/* 
-@media screen and (max-width: 1279px){
+/* MEDIA QUERIES */
+@media screen and (max-width: 1649px) {
   .image-card-area {
-    grid-template-columns: 1fr 1fr 1fr;
-    padding-left: 35px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 }
 
-@media screen and (max-width: 974px){
+@media screen and (max-width: 1259px) {
+  .image-card-area {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 959px){
   .image-card-area {
     grid-template-columns: 1fr 1fr;
-} */
-
+    padding-left: 40px;
+  }
+}
 
 @media screen and (max-width: 749px) {
+  .image-card-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+ 
   header {
     flex-direction: column;
     align-items: center;
@@ -293,6 +312,10 @@ p {
   .add {
     margin: 0px 30px;
     width: 152px;
+  }
+
+  #message {
+    font-size: 20px;
   }
 }
 
@@ -333,10 +356,9 @@ p {
     margin: 0px 20px;
     width: 118px;
   }
-}
 
-@media screen and (max-width: 449px) {
-  .image-card-area {
-
+  #message {
+    font-size: 14px;
   }
 }
+

@@ -21,7 +21,7 @@ window.onload = setPage();
 // Initial State
 function setPage(){
   if (localStorage.getItem('Photos') == null) {
-    document.querySelector('.image-card-area').insertAdjacentHTML('afterbegin', `<h1 id="message">Add Photos To Album Above!</h1>`);
+    document.querySelector('.instructions').insertAdjacentHTML('afterbegin', `<h1 id="message">Add Photos To Album Above!</h1>`);
   }
   else {
     pullCardsFromStorage();
