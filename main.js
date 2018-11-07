@@ -41,11 +41,8 @@ function displayInstructions() {
 
 // ADDING REMOVING FROM LOCAL STORAGE 
 function pullCardsFromStorage() {
-  // if the array ISNT empty
   if (localStorage.getItem('Photos') !== null) {
-    // turn the array into an object
     photoAlbum = JSON.parse(localStorage.getItem("Photos"));
-    // for everything in the Array, go an re-instantiate each card
     photoAlbum = photoAlbum.map(function (photoCard) {
       return photoCard = new Photo(photoCard.title, photoCard.caption, photoCard.file, photoCard.id, photoCard.favorite);
     });
@@ -53,7 +50,6 @@ function pullCardsFromStorage() {
       if (index >= (photoAlbum.length - 10)) {
         addCardToDomWith(photoCard);
       }
-      // if the card is marked as a favorite, update the favorite counter
       if (photoCard.favorite) {
         favoriteCounter++;
       }
@@ -62,36 +58,41 @@ function pullCardsFromStorage() {
   };
 }
 
-// CREATE CARDS FUNCTIONALITY
+// CREATE + ADD CARDS FUNCTIONALITY
 function createNewPhotoCard(event) {
   event.preventDefault();
   var file = document.querySelector("#file").files[0];
   var reader = new FileReader();
   reader.readAsDataURL(file);
   reader.onload = function(event) {
-    // Grab title text
     var titleText = document.querySelector('#title-input').value;
-    // grab caption text
     var captionText = document.querySelector('#caption-input').value;
-    // grab the URL from the upload input - reader 
     var pictureURL = event.target.result;
-    // turn the file into a usable URL string
     displayInstructions();
     if (titleText && captionText) {
-      // create new photo card with title, caption and URL for the img src
       var photo = new Photo(titleText, captionText, pictureURL);
-      // add new photo card to DOM
       addCardToDomWith(photo);
-      // add photo card to the album array
       addToAlbumArray(photo);
-      // save the array back to local storage
       photo.saveToStorage(photoAlbum);
     };
   };
 }
 
+function addToAlbumArray(photoCard) {
+  photoAlbum.push(photoCard);
+}
+
+function addCardToDomWith(photo) {
+  var newPhotoCard = document.createElement('article');
+
+  newPhotoCard.className = 'image-card';
+  photo.photoCardInfo(newPhotoCard);
+  document.querySelector('.image-card-area').prepend(newPhotoCard);
+  clearInputs();
+}
+
 // DISABLED FUNCTIONALITY
-function toggleDisabled(event) {
+function toggleDisabled() {
   var title = document.querySelector('#title-input').value;
   var caption = document.querySelector('#caption-input').value;
   var file = document.querySelector('#file').value;
@@ -102,21 +103,6 @@ function toggleDisabled(event) {
   } else if (title && caption && file) {
     addBtn.disabled = false;
   };
-}
-
-// Add Photo Cards to Array
-function addToAlbumArray(photoCard) {
-  photoAlbum.push(photoCard);
-}
-
-// ADD CARD TO DOM
-function addCardToDomWith(photo) {
-  var newPhotoCard = document.createElement('article');
-
-  newPhotoCard.className = 'image-card';
-  photo.photoCardInfo(newPhotoCard);
-  document.querySelector('.image-card-area').prepend(newPhotoCard);
-  clearInputs();
 }
 
 function clearInputs() {
@@ -130,22 +116,17 @@ function clearDOM() {
 
 // DELETE FUNCTIONALITY
 function deleteCardUsing(cardId) {
-  // find the index in the photo album array that matches the specific ID
   var index = photoAlbum.findIndex(function (photo) {
     return photo.id = cardId;
   });
-  // at the specific index in the Array, run the delete from storage method
   photoAlbum[index].deleteFromStorage(photoAlbum, index);
   event.target.closest('article').remove();
   displayMessageWhenEmpty();
 }
 
 function findCardToDelete(event) {
-  // if i click on a delete btn
   if (event.target.classList.contains('delete')) {
-    // grab the photo cards ID (which lives in dataset)
     var cardId = event.target.closest('article').dataset.name;
-    // delete the correct card by referencing its ID
     deleteCardUsing(cardId);
   };
 }
@@ -180,6 +161,26 @@ function editPhotoCaption(event) {
 }
 
 // SHOW FAVORITES FUNCTIONALITY
+function editFavoriteStatus(event) {
+  if (event.target.classList.contains('favorite')) {
+    var currentCard = event.target.closest('.image-card');
+    var currentCardId = currentCard.dataset.name;
+    var index = photoAlbum.findIndex(function (cardFromArray) {
+      return cardFromArray.id == currentCardId;
+    });
+    currentCard = photoAlbum[index];
+    currentCard.updatePhoto(currentCard.title, currentCard.caption, !currentCard.favorite);
+    currentCard.saveToStorage(photoAlbum);
+    event.target.classList.replace(`favorite-${!currentCard.favorite}`, `favorite-${currentCard.favorite}`);
+    if (currentCard.favorite) {
+      favoriteCounter++;
+    } else {
+      favoriteCounter--;
+    };
+    updateFavViewNums();
+  };
+}
+
 function changeFavoritesBtn(event) {
   event.preventDefault();
   if (event.target.classList.contains('favorites')) {
@@ -208,43 +209,14 @@ function showFavoritesOnly() {
   });
 }
 
-function editFavoriteStatus(event) {
-  // if you click on a favorite button
-  if (event.target.classList.contains('favorite')) {
-    var currentCard = event.target.closest('.image-card');
-    var currentCardId = currentCard.dataset.name;
-    // assigning index to the specific index in the array that matcehs the id
-    var index = photoAlbum.findIndex(function(cardFromArray) {
-      return cardFromArray.id == currentCardId;
-    });
-
-    currentCard = photoAlbum[index];
-    currentCard.updatePhoto(currentCard.title, currentCard.caption, !currentCard.favorite);
-    currentCard.saveToStorage(photoAlbum);
-
-    // If the classlist is NOT favorite, replace with favorite to add correct styles
-    event.target.classList.replace(`favorite-${!currentCard.favorite}`, `favorite-${currentCard.favorite}`);
-    // if the card is marked favorite, increase the favorite counter
-    if (currentCard.favorite) {
-      favoriteCounter++;
-      // otherwise, decrease the favorite counter
-    } else {
-      favoriteCounter--;
-    };
-    updateFavViewNums();
-  };
-}
-
 function updateFavViewNums() {
   document.querySelector('.favorites').innerText = `View ${favoriteCounter} Favorites`;
 }
 
-
 // SEARCH FUNCTIONALITY
-function searchForCards(event) {
+function searchForCards() {
   var query = document.querySelector('.search-bar').value.toLowerCase();
 
-  // If we've clicked the view favs btn, only search for and return cards that are favorited
   if (document.querySelector('.favorites') === null) {
     var arrayToSearch = photoAlbum.filter(function (photo) {
       if (photo.favorite === true) {
@@ -255,14 +227,11 @@ function searchForCards(event) {
     var arrayToSearch = photoAlbum;
   };
   var searchResults = arrayToSearch.filter(function(photo) {
-    // create new array of any card whose title or caption matches the query
     var cardTitle = photo.title.toLowerCase();
     var cardCaption = photo.caption.toLowerCase();
     return cardTitle.includes(query) || cardCaption.includes(query);
   });
-  // Clear the DOM
   clearDOM();
-  // Go through the new array of search searchResults, and add to dom if it meets the query specs
   searchResults.forEach(function(meetsQuery) {
     addCardToDomWith(meetsQuery);
   });
