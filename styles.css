@@ -356,5 +356,10 @@ p {
   #message {
     font-size: 14px;
   }
+
+  .show button {
+    font-size: 12px;
+    width: 118px;
+  }
 }
 
