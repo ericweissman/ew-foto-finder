@@ -23,7 +23,7 @@ class Photo {
 
   saveToStorage(albumArray) {
     localStorage.setItem('Photos', JSON.stringify(albumArray));
-  }
+  };
 
   deleteFromStorage(array, index) {
     array.splice(index, 1);
@@ -33,16 +33,15 @@ class Photo {
       this.saveToStorage(array);
     } else {
       localStorage.clear();
-    }
+    };
   };
-
 
   updatePhoto(newTitle, newCaption, favorite){
     this.title = newTitle;
     this.caption = newCaption;
     this.favorite = favorite;
-  }
-}
+  };
+};
 
 
 

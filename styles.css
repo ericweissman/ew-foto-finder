@@ -157,11 +157,9 @@ label {
 /* IMAGE CARD AREA */
 .image-card-area {
   display: grid;
-/* 
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  margin: 10px;
-  padding: 30px;
+  margin-left: 50px;
+  padding-top: 20px;
 }
 
 /* CARD template! */
@@ -258,6 +256,22 @@ p {
   margin: 0;
 }
 
+.show {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.show button {
+  background-color: #5B4447;
+  border: 1px solid #5B4447;
+  color: white;
+  height: 40px;
+  margin-top: 15px;
+  outline: 0;
+  width: 180px;
+}
+
 /* DISABLE BUTTONS */
 .btns:disabled {
   background-color: #C2B2B4;
@@ -279,7 +293,6 @@ p {
 @media screen and (max-width: 959px){
   .image-card-area {
     grid-template-columns: 1fr 1fr;
-    padding-left: 40px;
   }
 }
 
@@ -288,6 +301,7 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
     padding: 0;
   }
  
@@ -318,11 +332,6 @@ p {
     font-size: 20px;
   }
 }
-
-/* @media screen and (max-width: 660px){
-  .image-card-area {
-    grid-template-columns: 1fr;
-} */
 
 
 @media screen and (max-width: 449px) {
