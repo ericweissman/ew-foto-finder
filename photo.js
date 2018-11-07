@@ -8,7 +8,7 @@ class Photo {
   }
 
   photoCardInfo(photoCard) {
-    photoCard.dataset.name = this.id
+    photoCard.dataset.name = this.id;
     photoCard.innerHTML = `
       <h2 class="card-title" contenteditable="true">${this.title}</h2>
       <div>
@@ -23,25 +23,25 @@ class Photo {
 
   saveToStorage(albumArray) {
     localStorage.setItem('Photos', JSON.stringify(albumArray));
-  };
+  }
 
   deleteFromStorage(array, index) {
     array.splice(index, 1);
     this.saveToStorage(array);
 
-    if(array.length !== 0){
+    if (array.length !== 0){
       this.saveToStorage(array);
     } else {
       localStorage.clear();
     };
-  };
+  }
 
-  updatePhoto(newTitle, newCaption, favorite){
+  updatePhoto(newTitle, newCaption, favorite) {
     this.title = newTitle;
     this.caption = newCaption;
     this.favorite = favorite;
-  };
-};
+  }
+}
 
 
 
