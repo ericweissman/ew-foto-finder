@@ -49,7 +49,7 @@ function pullCardsFromStorage() {
     photoAlbum = photoAlbum.map(function (photoCard) {
       return photoCard = new Photo(photoCard.title, photoCard.caption, photoCard.file, photoCard.id, photoCard.favorite);
     });
-    photoAlbum.forEach(function (photoCard, index) {
+    photoAlbum.forEach(function(photoCard, index) {
       if (index >= (photoAlbum.length - 10)) {
         addCardToDomWith(photoCard);
       }
@@ -156,7 +156,7 @@ function editPhotoTitle(event) {
     var currentCard = event.target.closest('.image-card');
     var currentCardTitle = event.target.closest('.image-card .card-title').innerText;
 
-    photoAlbum.forEach(function (cardFromArray) {
+    photoAlbum.forEach(function(cardFromArray) {
       if (cardFromArray.id == currentCard.dataset.name) {
         cardFromArray.updatePhoto(currentCardTitle, cardFromArray.caption, cardFromArray.favorite);
         cardFromArray.saveToStorage(photoAlbum);
@@ -170,7 +170,7 @@ function editPhotoCaption(event) {
     var currentCard = event.target.closest('.image-card');
     var currentCardCaption = event.target.closest('.image-card .card-caption').innerText;
 
-    photoAlbum.forEach(function (cardFromArray) {
+    photoAlbum.forEach(function(cardFromArray) {
       if (cardFromArray.id == currentCard.dataset.name) {
         cardFromArray.updatePhoto(cardFromArray.title, currentCardCaption, cardFromArray.favorite);
         cardFromArray.saveToStorage(photoAlbum);
@@ -189,7 +189,7 @@ function changeFavoritesBtn(event) {
   } else {
     document.querySelector('.view-all').classList.replace('view-all', 'favorites');
     clearDOM();
-    photoAlbum.forEach(function (photoCard) {
+    photoAlbum.forEach(function(photoCard) {
       addCardToDomWith(photoCard);
     });
     updateFavViewNums();
@@ -197,13 +197,13 @@ function changeFavoritesBtn(event) {
 }
 
 function showFavoritesOnly() {
-  var favorites = photoAlbum.filter(function (photo) {
+  var favorites = photoAlbum.filter(function(photo) {
     if (photo.favorite === true) {
       return photo;
     };
   });
   clearDOM();
-  favorites.forEach(function (favorite) {
+  favorites.forEach(function(favorite) {
     addCardToDomWith(favorite);
   });
 }
@@ -214,7 +214,7 @@ function editFavoriteStatus(event) {
     var currentCard = event.target.closest('.image-card');
     var currentCardId = currentCard.dataset.name;
     // assigning index to the specific index in the array that matcehs the id
-    var index = photoAlbum.findIndex(function (cardFromArray) {
+    var index = photoAlbum.findIndex(function(cardFromArray) {
       return cardFromArray.id == currentCardId;
     });
 
@@ -254,7 +254,7 @@ function searchForCards(event) {
   } else {
     var arrayToSearch = photoAlbum;
   };
-  var searchResults = arrayToSearch.filter(function (photo) {
+  var searchResults = arrayToSearch.filter(function(photo) {
     // create new array of any card whose title or caption matches the query
     var cardTitle = photo.title.toLowerCase();
     var cardCaption = photo.caption.toLowerCase();
@@ -263,7 +263,7 @@ function searchForCards(event) {
   // Clear the DOM
   clearDOM();
   // Go through the new array of search searchResults, and add to dom if it meets the query specs
-  searchResults.forEach(function (meetsQuery) {
+  searchResults.forEach(function(meetsQuery) {
     addCardToDomWith(meetsQuery);
   });
 }
@@ -275,7 +275,7 @@ function changeShowMoreShowLess(event) {
     document.querySelector('.show-more').classList.replace('show-more', 'show-less');
     document.querySelector('.show-less').innerText = 'Show Less';
     clearDOM();
-    photoAlbum.forEach(function (photoCard) {
+    photoAlbum.forEach(function(photoCard) {
       addCardToDomWith(photoCard);
     });
   } else {
