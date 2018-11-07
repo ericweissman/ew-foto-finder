@@ -3,8 +3,6 @@
 
 The Foto Finder app allows a user to upload, edit, delete and favorite multiple photos. These photos (along with titles and captions) are saved to local storage and persist on page reload. Users can also utilize a search bar to search for photos in real-time that match either the title or caption text. Users can also favorite photos by clicking on intuitive icons on the screen. Users also have the ability to show only photos they have favorited.
 
-<img width="1435" alt="ideabox-triples-our-comp" src="https://user-images.githubusercontent.com/39391585/47855572-993eab00-ddaa-11e8-85d2-80afd038f15f.png">
-
 
 ## Built With
 HTML
