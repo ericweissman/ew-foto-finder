@@ -118,6 +118,7 @@ input[type="text"]:focus {
 label {
   color: #938284;
   font-size: 16px;
+  margin-top: 10px;
   padding: 10px 0;
 }
 
@@ -127,8 +128,7 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 25px 0;
-  padding-bottom: 25px;
+  margin: 35px 0;
 }
 
 .btns {
@@ -147,7 +147,7 @@ label {
 
 .small-btns {
   display: flex;
-  margin-top: 20px;
+  margin: 35px 0;
 }
 
 /* IMAGE CARD AREA */
