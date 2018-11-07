@@ -39,8 +39,6 @@ function displayInstructions() {
   };
 }
 
-
-
 // ADDING REMOVING FROM LOCAL STORAGE 
 function pullCardsFromStorage() {
   // if the array ISNT empty
@@ -271,9 +269,9 @@ function searchForCards(event) {
 }
 
 // SHOW MORE OR SHOW LESS
-function changeShowMoreShowLess(event){
+function changeShowMoreShowLess(event) {
   event.preventDefault();
-  if (event.target.classList.contains('show-more')){
+  if (event.target.classList.contains('show-more')) {
     document.querySelector('.show-more').classList.replace('show-more', 'show-less');
     document.querySelector('.show-less').innerText = 'Show Less';
     clearDOM();
@@ -284,8 +282,8 @@ function changeShowMoreShowLess(event){
     document.querySelector('.show-less').classList.replace('show-less', 'show-more');
     document.querySelector('.show-more').innerText = 'Show More';
     clearDOM();
-    photoAlbum.forEach(function(photoCard, index){
-      if (index >= photoAlbum.length - 10){
+    photoAlbum.forEach(function(photoCard, index) {
+      if (index >= photoAlbum.length - 10) {
         addCardToDomWith(photoCard);
       };
     });
