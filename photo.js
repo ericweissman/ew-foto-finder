@@ -12,7 +12,7 @@ class Photo {
     photoCard.innerHTML = `
       <h2 class="card-title" contenteditable="true">${this.title}</h2>
       <div>
-      <img class="card-img" src="${this.file}" alt=" photo">
+      <img class="card-img" src="${this.file}" alt="Photo of ${this.title}">
       </div>
       <p class="card-caption" contenteditable="true">${this.caption}</p>
       <section class="card-bottom">
