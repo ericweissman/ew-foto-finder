@@ -181,6 +181,67 @@ function editPhotoCaption(event) {
   };
 }
 
+// SHOW FAVORITES FUNCTIONALITY
+function changeFavoritesBtn(event) {
+  event.preventDefault();
+  if (event.target.classList.contains('favorites')) {
+    document.querySelector('.favorites').classList.replace('favorites', 'view-all');
+    document.querySelector('.view-all').innerText = 'Show All Photos';
+    showFavoritesOnly();
+  } else {
+    document.querySelector('.view-all').classList.replace('view-all', 'favorites');
+    clearDOM();
+    photoAlbum.forEach(function (photoCard) {
+      addCardToDomWith(photoCard);
+    });
+    updateFavViewNums();
+  };
+}
+
+function showFavoritesOnly() {
+  var favorites = photoAlbum.filter(function (photo) {
+    if (photo.favorite === true) {
+      return photo;
+    };
+  });
+  clearDOM();
+  favorites.forEach(function (favorite) {
+    addCardToDomWith(favorite);
+  });
+}
+
+function editFavoriteStatus(event) {
+  // if you click on a favorite button
+  if (event.target.classList.contains('favorite')) {
+    var currentCard = event.target.closest('.image-card');
+    var currentCardId = currentCard.dataset.name;
+    // assigning index to the specific index in the array that matcehs the id
+    var index = photoAlbum.findIndex(function (cardFromArray) {
+      return cardFromArray.id == currentCardId;
+    });
+
+    currentCard = photoAlbum[index];
+    currentCard.updatePhoto(currentCard.title, currentCard.caption, !currentCard.favorite);
+    currentCard.saveToStorage(photoAlbum);
+
+    // If the classlist is NOT favorite, replace with favorite to add correct styles
+    event.target.classList.replace(`favorite-${!currentCard.favorite}`, `favorite-${currentCard.favorite}`);
+    // if the card is marked favorite, increase the favorite counter
+    if (currentCard.favorite) {
+      favoriteCounter++;
+      // otherwise, decrease the favorite counter
+    } else {
+      favoriteCounter--;
+    };
+    updateFavViewNums();
+  };
+}
+
+function updateFavViewNums() {
+  document.querySelector('.favorites').innerText = `View ${favoriteCounter} Favorites`;
+}
+
+
 // SEARCH FUNCTIONALITY
 function searchForCards(event) {
   var query = document.querySelector('.search-bar').value.toLowerCase();
@@ -230,67 +291,3 @@ function changeShowMoreShowLess(event){
     });
   };
 }
-
-// SHOW FAVORITES FUNCTIONALITY
-function changeFavoritesBtn(event) {
-  event.preventDefault();
-  if (event.target.classList.contains('favorites')){
-    document.querySelector('.favorites').classList.replace('favorites', 'view-all');
-    document.querySelector('.view-all').innerText = 'Show All Photos';
-    showFavoritesOnly();
-  } else {
-    document.querySelector('.view-all').classList.replace('view-all', 'favorites');
-    clearDOM();
-    photoAlbum.forEach(function (photoCard) {
-      addCardToDomWith(photoCard);
-    });
-    updateFavViewNums();
-  }
-}
-
-function showFavoritesOnly() {
-  var favorites = photoAlbum.filter(function (photo) {
-      if (photo.favorite === true) {
-      return photo;
-    }
-  });
-  clearDOM();
-  favorites.forEach(function (favorite) {
-    addCardToDomWith(favorite);
-  });
-}
-
-
-// TOGGLE WHETHER PHOTO IS CLASSIFIED AS A FAVORITE
-function editFavoriteStatus(event){
-  // if you click on a favorite button
-  if (event.target.classList.contains('favorite')) {
-    var currentCard = event.target.closest('.image-card');
-    var currentCardId = currentCard.dataset.name
-    // assigning index to the specific index in the array that matcehs the id
-    var index = photoAlbum.findIndex(function(cardFromArray){
-      return cardFromArray.id == currentCardId
-      })
-
-    currentCard = photoAlbum[index];
-    currentCard.updatePhoto(currentCard.title, currentCard.caption, !currentCard.favorite);
-    currentCard.saveToStorage(photoAlbum);
-    
-    // If the classlist is NOT favorite, replace with favorite to add correct styles
-    event.target.classList.replace(`favorite-${!currentCard.favorite}`, `favorite-${currentCard.favorite}`);
-    // if the card is marked favorite, increase the favorite counter
-    if (currentCard.favorite) {
-      favoriteCounter++;
-      // otherwise, decrease the favorite counter
-    } else {
-      favoriteCounter--;
-    }
-    updateFavViewNums();
-  }
-}
-
-function updateFavViewNums(){
-  document.querySelector('.favorites').innerText = `View ${favoriteCounter} Favorites`;
-}
-
-
